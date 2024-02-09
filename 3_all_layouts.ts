@@ -51,44 +51,28 @@ export const payloadIds = {
   SlowOrderResponse: 14,
 } as const;
 
-const sharedFillLayout = [
+const fillLayout = [
   {name: "source", binary: "object", layout: [
     {name: "chain",  ...layoutItems.chainItem()},
     {name: "sender", ...layoutItems.universalAddressItem},
   ]},
   {name: "redeemer", ...layoutItems.universalAddressItem},
+  {name: "redeemerMessage", binary: "bytes", lengthSize: 4},
 ] as const satisfies Layout;
 
 const fillPayloadLayout = [
   layoutItems.payloadIdItem(payloadIds.Fill),
-  ...sharedFillLayout,
-  {name: "redeemerMessage", binary: "bytes"},
+  ...fillLayout,
 ] as const satisfies Layout;
 
 type FillPayload = LayoutToType<typeof fillPayloadLayout>;
 
 const amount16Item = {binary: "uint", size: 16} as const satisfies UintLayoutItem;
 
-const remainderLayout = (redeemerMessageSize: number) => [
-  {name: "redeemerMessage", binary: "bytes", size: redeemerMessageSize},
-  {name: "fillAmount", ...amount16Item},
-] as const satisfies Layout;
-
 const fastFillPayloadLayout = [
   layoutItems.payloadIdItem(payloadIds.FastFill),
-  ...sharedFillLayout,
-  //yuck!
-  {name: "workaround", binary: "bytes", custom: {
-    to: (remainder: Uint8Array) => {
-      const redeemerMessageSize = remainder.length - 16;
-      if (remainder.length < 0)
-        throw new Error("Remainder too short!");
-
-      return deserializeLayout(remainderLayout(redeemerMessageSize), remainder);
-    },
-    from: (value: {redeemerMessage: Uint8Array, fillAmount: bigint}) =>
-      serializeLayout(remainderLayout(value.redeemerMessage.length), value),
-  }}
+  ...fillLayout,
+  {name: "fillAmount", ...amount16Item},
 ] as const satisfies Layout;
 
 type FastFillPayload = LayoutToType<typeof fastFillPayloadLayout>;

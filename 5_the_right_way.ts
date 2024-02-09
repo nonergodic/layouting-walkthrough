@@ -5,8 +5,6 @@ import {
   UintLayoutItem,
   lazyInstantiate,
   column,
-  serializeLayout,
-  deserializeLayout,
 } from "@wormhole-foundation/sdk-base";
 
 import {
@@ -25,17 +23,13 @@ export const payloadIds = {
 
 const amount16Item = {binary: "uint", size: 16} as const satisfies UintLayoutItem;
 
-const sharedFillLayout = [
+const fillLayout = [
   {name: "source", binary: "object", layout: [
     {name: "chain",  ...layoutItems.chainItem()},
     {name: "sender", ...layoutItems.universalAddressItem},
   ]},
   {name: "redeemer", ...layoutItems.universalAddressItem},
-] as const satisfies Layout;
-
-const remainderLayout = (redeemerMessageSize: number) => [
-  {name: "redeemerMessage", binary: "bytes", size: redeemerMessageSize},
-  {name: "fillAmount", ...amount16Item},
+  {name: "redeemerMessage", binary: "bytes", lengthSize: 4},
 ] as const satisfies Layout;
 
 const toFullPayload = <L extends Layout>(layout: L) => [
@@ -47,26 +41,14 @@ const namedPayloads = [[
     "Fill",
     toFullPayload([
       layoutItems.payloadIdItem(payloadIds.Fill),
-      ...sharedFillLayout,
-      {name: "redeemerMessage", binary: "bytes"},
+      ...fillLayout,
     ])
   ], [
     "FastFill",
     toFullPayload([
       layoutItems.payloadIdItem(payloadIds.FastFill),
-      ...sharedFillLayout,
-      //yuck!
-      {name: "workaround", binary: "bytes", custom: {
-        to: (remainder: Uint8Array) => {
-          const redeemerMessageSize = remainder.length - 16;
-          if (remainder.length < 0)
-            throw new Error("Remainder too short!");
-    
-          return deserializeLayout(remainderLayout(redeemerMessageSize), remainder);
-        },
-        from: (value: {redeemerMessage: Uint8Array, fillAmount: bigint}) =>
-          serializeLayout(remainderLayout(value.redeemerMessage.length), value),
-      }}
+      ...fillLayout,
+      {name: "fillAmount", ...amount16Item},
     ])
   ], [
     "FastMarketOrder",

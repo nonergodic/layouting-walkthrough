@@ -20,7 +20,7 @@ const slowOrderResponseExample = {
   caller:        new UniversalAddress("BB".repeat(32)),
   mintRecipient: new UniversalAddress("CC".repeat(32)),
   payload: {
-    baseFee:       2n**128n - 1n,
+    baseFee:     2n**128n - 1n,
   }
 } as const;
 
@@ -41,5 +41,5 @@ function checkEmitter(serializedVaa: Uint8Array, expectedEmitter: UniversalAddre
   if (!vaa.emitterAddress.equals(expectedEmitter))
     throw new Error("unrecognized emitter");
   
-  return vaa;
+  return vaa.payload;
 }

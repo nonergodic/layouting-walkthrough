@@ -90,10 +90,8 @@ function decodePayload(serialized: Uint8Array) {
       sender: new UniversalAddress("DD".repeat(32)),
     },
     redeemer: new UniversalAddress("EE".repeat(32)),
-    workaround: {
-      redeemerMessage: new Uint8Array([0x01, 0x02, 0x03]),
-      fillAmount: 2n**128n - 1n,
-    }
+    redeemerMessage: new Uint8Array([0x01, 0x02, 0x03]),
+    fillAmount: 2n**128n - 1n,
   });
   const deserialization = decodePayload(serialized);
 
