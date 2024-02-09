@@ -1,0 +1,20 @@
+{
+  "name": "showntell",
+  "version": "0.1.0",
+  "scripts": {
+    "l1": "ts-node 1_basic_layouting.ts",
+    "l2": "ts-node 2_strong_typing.ts",
+    "l3": "ts-node 3_all_layouts.ts",
+    "l4": "ts-node 4_replace_original.ts",
+    "l5": "echo nothing to execute",
+    "l6": "ts-node 6_demo"
+  },
+  "devDependencies": {
+    "@wormhole-foundation/sdk-base": "^0.3.3",
+    "@wormhole-foundation/sdk-definitions": "^0.3.3",
+    "@tsconfig/recommended": "^1.0.2",
+    "@types/node": "^20.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
