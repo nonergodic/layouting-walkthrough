@@ -4,7 +4,7 @@
   "scripts": {
     "l1": "ts-node 1_basic_layouting.ts",
     "l2": "ts-node 2_strong_typing.ts",
-    "l3": "ts-node 3_all_layouts.ts",
+    "l3": "echo nothing to execute",
     "l4": "ts-node 4_replace_original.ts",
     "l5": "echo nothing to execute",
     "l6": "ts-node 6_demo"

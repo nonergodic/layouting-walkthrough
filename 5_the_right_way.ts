@@ -76,7 +76,7 @@ const namedPayloads = [[
       {name: "minAmountOut",    ...amount16Item},
       {name: "target", binary: "object", layout: [
         {name: "chain",  ...layoutItems.chainItem()},
-        {name: "domain", ...layoutItems.circleDomainItem}, //why? both a domain and a chain?
+        {name: "domain", ...layoutItems.circleDomainItem},
       ]},
       {name: "redeemer",        ...layoutItems.universalAddressItem},
       {name: "sender",          ...layoutItems.universalAddressItem},
