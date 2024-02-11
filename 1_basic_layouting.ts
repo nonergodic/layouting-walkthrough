@@ -28,7 +28,7 @@ const elementaryFillLayout = [
   {name: "sourceChain",     binary: "uint",  size:  2},
   {name: "orderSender",     binary: "bytes", size: 32},
   {name: "redeemer",        binary: "bytes", size: 32},
-  {name: "redeemerMessage", binary: "bytes"          },
+  {name: "redeemerMessage", binary: "bytes", lengthSize: 4},
 ] as const satisfies Layout;
 
 type ElementaryFill = LayoutToType<typeof elementaryFillLayout>;

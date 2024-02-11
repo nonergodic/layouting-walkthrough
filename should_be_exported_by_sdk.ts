@@ -1,6 +1,7 @@
 import { layoutItems } from "@wormhole-foundation/sdk-definitions";
 
-//from here: https://github.com/wormhole-foundation/wormhole-circle-integration/blob/105ad59bad687416527003e0241dee4020889341/evm/src/circle_integration/CircleIntegrationMessages.sol#L25
+//exists in the connect sdk but isn't exported atm:
+//https://github.com/wormhole-foundation/connect-sdk/blob/a82dff30cedce9cd3472f39a4a3baed7165acc4d/core/definitions/src/payloads/automaticCircleBridge.ts#L12
 export const depositWithPayloadBase = [
   layoutItems.payloadIdItem(1),
   {
