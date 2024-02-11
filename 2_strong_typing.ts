@@ -63,7 +63,7 @@ type FixedChain = LayoutToType<typeof fixedChainLayout>;
 
 {
   const serialized = serializeLayout(fixedChainLayout, {sourceChain: "Ethereum"});
-  console.log("\n-- Fixed --");
+  console.log("-- Fixed --");
   print(serialized);
 
   printException(deserializeLayout, fixedChainLayout, new Uint8Array([0x00, 0x01]));
@@ -88,7 +88,7 @@ type Omitted2Chain = LayoutToType<typeof omittedChainLayout2>;
 
 {
   const serialized = serializeLayout(omittedChainLayout, {});
-  console.log("\n-- Omitted --");
+  console.log("-- Omitted --");
   print(serialized);
 }
 
