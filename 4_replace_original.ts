@@ -1,8 +1,9 @@
+import { print, printException } from "./utils";
+
 // ---- WormholeCctpDepositHeader
 
-//already exists! - demo:
-import {encoding} from "@wormhole-foundation/sdk-base";
-
+//already exists!
+//demo:
 import {
   AutomaticCircleBridge,
   serializePayload,
@@ -37,12 +38,9 @@ import {
     serialized
   );
 
-  console.log("\n-- DepositWithPayload --");
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
-  console.log("");
-  console.log("deserialized:");
-  console.log(deserialized);
+  console.log("-- DepositWithPayload --");
+  print(serialized);
+  print(deserialized);
 }
 
 // ---- MessageDecoder
@@ -95,26 +93,12 @@ function decodePayload(serialized: Uint8Array) {
   });
   const deserialization = decodePayload(serialized);
 
-  console.log("\n-- Decoded --");
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
-  console.log("");
-  console.log("deserialized:");
-  console.log(deserialization);
+  console.log("-- Decoded --");
+  print(serialized);
+  print(deserialization);
 
-  try {
-    decodePayload(new Uint8Array([0x01]));
-  } catch (error: any) {
-    console.error("\nCaught discrimination error:");
-    console.error(error.message);
-  }
-
-  try {
-    decodePayload(new Uint8Array([payloadIds.Fill]));
-  } catch (error: any) {
-    console.error("\nCaught deserialization error:");
-    console.error(error.message);
-  }
+  printException(decodePayload, new Uint8Array([0x01]));
+  printException(decodePayload, new Uint8Array([payloadIds.Fill]));
 }
 
 // ---- LazyInstantiate

@@ -1,9 +1,10 @@
+import { print, printException } from "./utils";
+
 import {
   Layout,
   LayoutToType,
   serializeLayout,
   deserializeLayout,
-  encoding,
   CustomConversion,
   FixedConversion,
   Chain,
@@ -41,11 +42,8 @@ type ConvertedChain = LayoutToType<typeof convertedChainLayout>;
   let deserialized = deserializeLayout(convertedChainLayout, serialized);
 
   console.log("-- Converted --");
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
-  console.log("");
-  console.log("deserialized:");
-  console.log(deserialized);
+  print(serialized);
+  print(deserialized);
 }
 
 // ---- Fixed
@@ -66,15 +64,9 @@ type FixedChain = LayoutToType<typeof fixedChainLayout>;
 {
   const serialized = serializeLayout(fixedChainLayout, {sourceChain: "Ethereum"});
   console.log("\n-- Fixed --");
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
+  print(serialized);
 
-  try {
-    deserializeLayout(fixedChainLayout, new Uint8Array([0x00, 0x01]));
-  } catch (error: any) {
-    console.error("\nCaught deserialization error:");
-    console.error(error.message);
-  }
+  printException(deserializeLayout, fixedChainLayout, new Uint8Array([0x00, 0x01]));
 }
 
 // ---- Omitted
@@ -97,8 +89,7 @@ type Omitted2Chain = LayoutToType<typeof omittedChainLayout2>;
 {
   const serialized = serializeLayout(omittedChainLayout, {});
   console.log("\n-- Omitted --");
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
+  print(serialized);
 }
 
 // ----

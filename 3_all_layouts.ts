@@ -2,8 +2,6 @@ import {
   Layout,
   UintLayoutItem,
   LayoutToType,
-  serializeLayout,
-  deserializeLayout,
 } from "@wormhole-foundation/sdk-base";
 
 import { layoutItems } from "@wormhole-foundation/sdk-definitions";

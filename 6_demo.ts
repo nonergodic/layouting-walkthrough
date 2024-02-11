@@ -1,6 +1,6 @@
-import { getLLPayloadDiscrimintor } from "./5_the_right_way";
+import { print } from "./utils";
 
-import {encoding} from "@wormhole-foundation/sdk-base";
+import { getLLPayloadDiscriminator } from "./5_the_right_way";
 
 import {
   UniversalAddress,
@@ -26,18 +26,15 @@ const slowOrderResponseExample = {
 
 {
   const serialized = serializePayload("LiquidityLayer:SlowOrderResponse", slowOrderResponseExample);
-  const deserialized = deserializePayload(getLLPayloadDiscrimintor(), serialized);
+  const deserialized = deserializePayload(getLLPayloadDiscriminator(), serialized);
 
-  console.log("serialized:");
-  console.log(encoding.hex.encode(serialized));
-  console.log("");
-  console.log("deserialized:");
-  console.log(deserialized);
+  print(serialized);
+  print(deserialized);
 }
 
 //last but not least, emitter check:
 function checkEmitter(serializedVaa: Uint8Array, expectedEmitter: UniversalAddress) {
-  const vaa = deserialize(getLLPayloadDiscrimintor(), serializedVaa);
+  const vaa = deserialize(getLLPayloadDiscriminator(), serializedVaa);
   if (!vaa.emitterAddress.equals(expectedEmitter))
     throw new Error("unrecognized emitter");
   

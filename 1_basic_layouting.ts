@@ -1,3 +1,5 @@
+import { print, printException } from "./utils";
+
 // !!! Layouts !!!
 //
 // * a TypeScript-native Domain Specific Language (DSL)
@@ -53,19 +55,9 @@ const exampleFill: ElementaryFill = {
 const serialized   =   serializeLayout(elementaryFillLayout, exampleFill);
 const deserialized = deserializeLayout(elementaryFillLayout, serialized);
 
-console.log("serialized:");
-console.log(encoding.hex.encode(serialized));
-console.log("");
-console.log("deserialized:");
-console.log(deserialized);
+print(serialized)
+print(deserialized);
 
 // Error handling:
-
-try {
-  deserializeLayout(elementaryFillLayout, serialized.slice(0, 10))
-} catch (error: any) {
-  console.error("Caught deserialization error:");
-  console.error(error.message);
-}
-
+printException(deserializeLayout, elementaryFillLayout, serialized.slice(0, 10));
 // ... clearly some room for improvement here

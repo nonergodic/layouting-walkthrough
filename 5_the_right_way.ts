@@ -79,7 +79,7 @@ const namedPayloads = [[
 
 const payloadNames = column(namedPayloads, 0);
 
-export const getLLPayloadDiscrimintor = lazyInstantiate(() =>
+export const getLLPayloadDiscriminator = lazyInstantiate(() =>
   payloadDiscriminator(["LiquidityLayer", payloadNames]),
 );
 
